@@ -1,15 +1,16 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.8.5-openjdk-17' // Or any other Maven image
-        }
-    }
+    agent any
     stages {
+        stage('Checkout') {
+            steps {
+                // This ensures Jenkins clones the repo properly
+                checkout scm
+            }
+        }
         stage('Build') {
             steps {
-                sh 'mvn -B -DskipTests clean package'
+                sh 'mvn clean package'
             }
         }
     }
 }
-
